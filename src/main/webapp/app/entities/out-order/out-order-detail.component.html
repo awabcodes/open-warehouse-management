@@ -48,6 +48,7 @@
             </button>
 
             <button type="button"
+                    *jhiHasAnyAuthority="'ROLE_USER'"
                     [routerLink]="['/out-order', outOrder.id, 'edit']"
                     class="btn btn-primary">
                 <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>

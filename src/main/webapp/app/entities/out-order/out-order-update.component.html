@@ -46,12 +46,12 @@
                         </small>
                     </div>
                 </div>
-                <div class="form-group">
+                <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="form-group">
                     <label class="form-control-label" jhiTranslate="openWarehouseManagementApp.outOrder.delivered" for="field_delivered">Delivered</label>
                     <input type="checkbox" class="form-control" name="delivered" id="field_delivered"
                         [(ngModel)]="outOrder.delivered" />
                 </div>
-                <div class="form-group">
+                <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="form-group">
                     <label class="form-control-label" jhiTranslate="openWarehouseManagementApp.outOrder.orderDate" for="field_orderDate">Order Date</label>
                     <div class="input-group">
                         <input id="field_orderDate" type="text" class="form-control" name="orderDate" ngbDatepicker  #orderDateDp="ngbDatepicker" [(ngModel)]="outOrder.orderDate"
@@ -61,7 +61,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="form-group">
+                <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="form-group">
                     <label class="form-control-label" jhiTranslate="openWarehouseManagementApp.outOrder.deliveryDate" for="field_deliveryDate">Delivery Date</label>
                     <div class="input-group">
                         <input id="field_deliveryDate" type="text" class="form-control" name="deliveryDate" ngbDatepicker  #deliveryDateDp="ngbDatepicker" [(ngModel)]="outOrder.deliveryDate"
@@ -71,7 +71,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="form-group">
+                <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="form-group">
                     <label class="form-control-label" jhiTranslate="openWarehouseManagementApp.outOrder.authorized" for="field_authorized">Authorized</label>
                     <input type="checkbox" class="form-control" name="authorized" id="field_authorized"
                         [(ngModel)]="outOrder.authorized" />
