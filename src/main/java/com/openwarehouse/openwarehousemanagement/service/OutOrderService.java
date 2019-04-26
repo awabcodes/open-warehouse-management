@@ -1,7 +1,9 @@
 package com.openwarehouse.openwarehousemanagement.service;
 
+import com.openwarehouse.openwarehousemanagement.domain.Item;
 import com.openwarehouse.openwarehousemanagement.domain.OutOrder;
 import com.openwarehouse.openwarehousemanagement.repository.OutOrderRepository;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 /**
@@ -23,8 +26,11 @@ public class OutOrderService {
 
     private final OutOrderRepository outOrderRepository;
 
-    public OutOrderService(OutOrderRepository outOrderRepository) {
+    private final ItemService itemService;
+
+    public OutOrderService(OutOrderRepository outOrderRepository, ItemService itemService) {
         this.outOrderRepository = outOrderRepository;
+        this.itemService = itemService;
     }
 
     /**
@@ -35,7 +41,37 @@ public class OutOrderService {
      */
     public OutOrder save(OutOrder outOrder) {
         log.debug("Request to save OutOrder : {}", outOrder);
+        outOrder.setAuthorized(false);
+        outOrder.setDelivered(false);
+        outOrder.setOrderDate(LocalDate.now());
         return outOrderRepository.save(outOrder);
+    }
+
+    public OutOrder authorize(Long id) {
+        log.debug("Request to authorize OutOrder : {}", id);
+        OutOrder outOrder = findOne(id).get();
+        outOrder.setAuthorized(!outOrder.isAuthorized());
+        return outOrderRepository.save(outOrder);
+    }
+
+    public OutOrder deliver(Long id) {
+        log.debug("Request to deliver OutOrder : {}", id);
+        OutOrder outOrder = findOne(id).get();
+        Item item = itemService.findOne(outOrder.getItem().getId()).get();
+        
+        double leftQuantity = item.getAvailableQuantity() - outOrder.getOrderQuantity();
+        if (outOrder.isAuthorized()) {
+            if (leftQuantity < item.getMinimumQuantity()) {
+                return null;   
+            } else {
+                item.setAvailableQuantity(leftQuantity);
+                outOrder.setDelivered(true);
+                outOrder.setDeliveryDate(LocalDate.now());
+                return outOrderRepository.save(outOrder);
+            }
+        } else {
+            return null;
+        }
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.openwarehouse.openwarehousemanagement.web.rest;
 import com.openwarehouse.openwarehousemanagement.domain.OutOrder;
+import com.openwarehouse.openwarehousemanagement.security.AuthoritiesConstants;
 import com.openwarehouse.openwarehousemanagement.service.OutOrderService;
 import com.openwarehouse.openwarehousemanagement.web.rest.errors.BadRequestAlertException;
 import com.openwarehouse.openwarehousemanagement.web.rest.util.HeaderUtil;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -60,6 +62,25 @@ public class OutOrderResource {
         return ResponseEntity.created(new URI("/api/out-orders/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
+    }
+
+    @PostMapping("/out-orders-authorize/{id}")
+    @Secured(AuthoritiesConstants.AUTHORIZER)
+    public ResponseEntity<OutOrder> authorizeOutOrder(@PathVariable Long id) throws URISyntaxException {
+        log.debug("REST request to authorize OutOrder : {}", id);
+        OutOrder result = outOrderService.authorize(id);
+        return ResponseEntity.ok().body(result);
+    }
+
+    @PostMapping("/out-orders-deliver/{id}")
+    @Secured(AuthoritiesConstants.MANAGER)
+    public ResponseEntity<OutOrder> deliverOutOrder(@PathVariable Long id) throws URISyntaxException {
+        log.debug("REST request to deliver OutOrder : {}", id);
+        OutOrder result = outOrderService.deliver(id);
+        if (result == null) {
+            throw new BadRequestAlertException("Either Unauthorized order or No Items", ENTITY_NAME, "notdelivered");
+        }
+        return ResponseEntity.ok().body(result);
     }
 
     /**
