@@ -101,7 +101,14 @@
             "edit": "تعديل",
             "open": "فتح",
             "save": "حفظ",
-            "view": "عرض"
+            "view": "عرض",
+            "authorize": "تصريح",
+            "unauthorize": "الغاء التصريح",
+            "authorized": "مصرح",
+            "unauthorized": "غير مصرح",
+            "deliver": "تسليم",
+            "delivered": "تم التسليم",
+            "notdelivered": "لم يتم التسليم"
         },
         "detail": {
             "field": "حقل",

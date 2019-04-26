@@ -91,6 +91,26 @@ export class OutOrderComponent implements OnInit, OnDestroy {
         this.loadAll();
     }
 
+    auhorize(id: number) {
+        this.outOrderService.authorize(id).subscribe(
+            (res: any) => {
+                this.onSuccess();
+                this.loadAll();
+            },
+            (err: any) => this.onError(err)
+        );
+    }
+
+    deliver(id: number) {
+        this.outOrderService.deliver(id).subscribe(
+            (res: any) => {
+                this.onSuccess();
+                this.loadAll();
+            },
+            (err: any) => this.onError(err)
+        );
+    }
+
     ngOnInit() {
         this.loadAll();
         this.accountService.identity().then(account => {
@@ -125,7 +145,11 @@ export class OutOrderComponent implements OnInit, OnDestroy {
         this.outOrders = data;
     }
 
+    protected onSuccess() {
+        this.jhiAlertService.success('Success', null, null);
+    }
+
     protected onError(errorMessage: string) {
-        this.jhiAlertService.error(errorMessage, null, null);
+        this.jhiAlertService.error('errorMessage', null, null);
     }
 }

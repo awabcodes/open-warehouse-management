@@ -1,7 +1,7 @@
 <div>
     <h2 id="page-heading">
         <span jhiTranslate="openWarehouseManagementApp.outOrder.home.title">Out Orders</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-out-order" [routerLink]="['/out-order/new']">
+        <button id="jh-create-entity" *jhiHasAnyAuthority="'ROLE_USER'" class="btn btn-primary float-right jh-create-entity create-out-order" [routerLink]="['/out-order/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span  jhiTranslate="openWarehouseManagementApp.outOrder.home.createLabel">
             Create new Out Order
@@ -32,10 +32,20 @@
                 <td>{{outOrder.title}}</td>
                 <td>{{outOrder.information}}</td>
                 <td>{{outOrder.orderQuantity}}</td>
-                <td>{{outOrder.delivered}}</td>
+                <td *ngIf="outOrder.delivered">
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delivered">Delivered</span>
+                </td>
+                <td *ngIf="!outOrder.delivered">
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.notdelivered">Not Delivered</span>
+                </td>
                 <td>{{outOrder.orderDate | date:'mediumDate'}}</td>
                 <td>{{outOrder.deliveryDate | date:'mediumDate'}}</td>
-                <td>{{outOrder.authorized}}</td>
+                <td *ngIf="outOrder.authorized">
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.authorized">Authorized</span>
+                </td>
+                <td *ngIf="!outOrder.authorized">
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.unauthorized">Unauthorized</span>
+                </td>
                 <td>
                     <div *ngIf="outOrder.item">
                         <a [routerLink]="['../item', outOrder.item?.id, 'view' ]" >{{outOrder.item?.name}}</a>
@@ -43,6 +53,37 @@
                 </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
+                        <div *ngIf="!outOrder.delivered">
+                            <div *ngIf="outOrder.authorized">
+                                <button type="button"
+                                        class="btn btn-danger btn-sm"
+                                        (click)="auhorize(outOrder.id)"
+                                        *jhiHasAnyAuthority="'ROLE_AUTHORIZER'">
+                                    <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                    <span class="d-none d-md-inline" jhiTranslate="entity.action.unauthorize">Unauthorize</span>
+                                </button>
+                            </div>
+                            <div *ngIf="!outOrder.authorized">
+                                <button type="button"
+                                        class="btn btn-success btn-sm"
+                                        (click)="auhorize(outOrder.id)"
+                                        *jhiHasAnyAuthority="'ROLE_AUTHORIZER'">
+                                    <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                    <span class="d-none d-md-inline" jhiTranslate="entity.action.authorize">Authorize</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div *ngIf="outOrder.authorized">
+                            <div *ngIf="!outOrder.delivered">
+                                <button type="button"
+                                        class="btn btn-success btn-sm"
+                                        (click)="deliver(outOrder.id)"
+                                        *jhiHasAnyAuthority="'ROLE_MANAGER'">
+                                    <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                    <span class="d-none d-md-inline" jhiTranslate="entity.action.deliver">Deliver</span>
+                                </button>
+                            </div>
+                        </div>
                         <button type="submit"
                                 [routerLink]="['/out-order', outOrder.id, 'view' ]"
                                 class="btn btn-info btn-sm">
@@ -50,12 +91,14 @@
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                         </button>
                         <button type="submit"
+                                *jhiHasAnyAuthority="'ROLE_USER'"
                                 [routerLink]="['/out-order', outOrder.id, 'edit']"
                                 class="btn btn-primary btn-sm">
                             <fa-icon [icon]="'pencil-alt'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
+                                *jhiHasAnyAuthority="'ROLE_ADMIN'"
                                 [routerLink]="['/', 'out-order', { outlets: { popup: outOrder.id + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"

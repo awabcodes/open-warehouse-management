@@ -101,7 +101,14 @@
             "edit": "Edit",
             "open": "Open",
             "save": "Save",
-            "view": "View"
+            "view": "View",
+            "authorize": "Authorize",
+            "unauthorize": "Unauthorize",
+            "authorized": "Authorized",
+            "unauthorized": "Unauthorized",
+            "deliver": "Deliver",
+            "delivered": "Delivered",
+            "notdelivered": "Not Delivered"
         },
         "detail": {
             "field": "Field",
