@@ -1,0 +1,106 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-item-heading" jhiTranslate="openWarehouseManagementApp.item.home.createOrEditLabel">Create or edit a Item</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!item.id">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="item.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="openWarehouseManagementApp.item.name" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                        [(ngModel)]="item.name" required/>
+                    <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.name?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="openWarehouseManagementApp.item.type" for="field_type">Type</label>
+                    <input type="text" class="form-control" name="type" id="field_type"
+                        [(ngModel)]="item.type" required/>
+                    <div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.type?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="openWarehouseManagementApp.item.availableQuantity" for="field_availableQuantity">Available Quantity</label>
+                    <input type="number" class="form-control" name="availableQuantity" id="field_availableQuantity"
+                        [(ngModel)]="item.availableQuantity" required/>
+                    <div [hidden]="!(editForm.controls.availableQuantity?.dirty && editForm.controls.availableQuantity?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.availableQuantity?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.availableQuantity?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="openWarehouseManagementApp.item.minimumQuantity" for="field_minimumQuantity">Minimum Quantity</label>
+                    <input type="number" class="form-control" name="minimumQuantity" id="field_minimumQuantity"
+                        [(ngModel)]="item.minimumQuantity" required/>
+                    <div [hidden]="!(editForm.controls.minimumQuantity?.dirty && editForm.controls.minimumQuantity?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.minimumQuantity?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.minimumQuantity?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="openWarehouseManagementApp.item.price" for="field_price">Price</label>
+                    <input type="number" class="form-control" name="price" id="field_price"
+                        [(ngModel)]="item.price" required/>
+                    <div [hidden]="!(editForm.controls.price?.dirty && editForm.controls.price?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.price?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.price?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="openWarehouseManagementApp.item.specification" for="field_specification">Specification</label>
+                    <input type="text" class="form-control" name="specification" id="field_specification"
+                        [(ngModel)]="item.specification" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="openWarehouseManagementApp.item.supplier" for="field_supplier">Supplier</label>
+                    <input type="text" class="form-control" name="supplier" id="field_supplier"
+                        [(ngModel)]="item.supplier" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="openWarehouseManagementApp.item.description" for="field_description">Description</label>
+                    <input type="text" class="form-control" name="description" id="field_description"
+                        [(ngModel)]="item.description" />
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

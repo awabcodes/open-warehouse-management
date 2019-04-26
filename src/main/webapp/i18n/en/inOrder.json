@@ -1,0 +1,27 @@
+{
+    "openWarehouseManagementApp": {
+        "inOrder": {
+            "home": {
+                "title": "In Orders",
+                "createLabel": "Create a new In Order",
+                "createOrEditLabel": "Create or edit a In Order"
+            },
+            "created": "A new In Order is created with identifier {{ param }}",
+            "updated": "A In Order is updated with identifier {{ param }}",
+            "deleted": "A In Order is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete In Order {{ id }}?"
+            },
+            "detail": {
+                "title": "In Order"
+            },
+            "title": "Title",
+            "information": "Information",
+            "orderQuantity": "Order Quantity",
+            "delivered": "Delivered",
+            "orderDate": "Order Date",
+            "deliveryDate": "Delivery Date",
+            "item": "Item"
+        }
+    }
+}

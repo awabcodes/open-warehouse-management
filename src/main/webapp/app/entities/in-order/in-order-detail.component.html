@@ -1,0 +1,53 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="inOrder">
+            <h2><span jhiTranslate="openWarehouseManagementApp.inOrder.detail.title">In Order</span> {{inOrder.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="openWarehouseManagementApp.inOrder.title">Title</span></dt>
+                <dd>
+                    <span>{{inOrder.title}}</span>
+                </dd>
+                <dt><span jhiTranslate="openWarehouseManagementApp.inOrder.information">Information</span></dt>
+                <dd>
+                    <span>{{inOrder.information}}</span>
+                </dd>
+                <dt><span jhiTranslate="openWarehouseManagementApp.inOrder.orderQuantity">Order Quantity</span></dt>
+                <dd>
+                    <span>{{inOrder.orderQuantity}}</span>
+                </dd>
+                <dt><span jhiTranslate="openWarehouseManagementApp.inOrder.delivered">Delivered</span></dt>
+                <dd>
+                    <span>{{inOrder.delivered}}</span>
+                </dd>
+                <dt><span jhiTranslate="openWarehouseManagementApp.inOrder.orderDate">Order Date</span></dt>
+                <dd>
+                    <span>{{inOrder.orderDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="openWarehouseManagementApp.inOrder.deliveryDate">Delivery Date</span></dt>
+                <dd>
+                    <span>{{inOrder.deliveryDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="openWarehouseManagementApp.inOrder.item">Item</span></dt>
+                <dd>
+                    <div *ngIf="inOrder.item">
+                        <a [routerLink]="['/item', inOrder.item?.id, 'view']">{{inOrder.item?.name}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/in-order', inOrder.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

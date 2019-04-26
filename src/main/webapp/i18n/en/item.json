@@ -1,0 +1,30 @@
+{
+    "openWarehouseManagementApp": {
+        "item": {
+            "home": {
+                "title": "Items",
+                "createLabel": "Create a new Item",
+                "createOrEditLabel": "Create or edit a Item"
+            },
+            "created": "A new Item is created with identifier {{ param }}",
+            "updated": "A Item is updated with identifier {{ param }}",
+            "deleted": "A Item is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Item {{ id }}?"
+            },
+            "detail": {
+                "title": "Item"
+            },
+            "name": "Name",
+            "type": "Type",
+            "availableQuantity": "Available Quantity",
+            "minimumQuantity": "Minimum Quantity",
+            "price": "Price",
+            "specification": "Specification",
+            "supplier": "Supplier",
+            "description": "Description",
+            "outOrders": "Out Orders",
+            "inOrders": "In Orders"
+        }
+    }
+}

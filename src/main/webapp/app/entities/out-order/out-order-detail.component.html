@@ -1,0 +1,53 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="outOrder">
+            <h2><span jhiTranslate="openWarehouseManagementApp.outOrder.detail.title">Out Order</span> {{outOrder.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="openWarehouseManagementApp.outOrder.title">Title</span></dt>
+                <dd>
+                    <span>{{outOrder.title}}</span>
+                </dd>
+                <dt><span jhiTranslate="openWarehouseManagementApp.outOrder.information">Information</span></dt>
+                <dd>
+                    <span>{{outOrder.information}}</span>
+                </dd>
+                <dt><span jhiTranslate="openWarehouseManagementApp.outOrder.orderQuantity">Order Quantity</span></dt>
+                <dd>
+                    <span>{{outOrder.orderQuantity}}</span>
+                </dd>
+                <dt><span jhiTranslate="openWarehouseManagementApp.outOrder.delivered">Delivered</span></dt>
+                <dd>
+                    <span>{{outOrder.delivered}}</span>
+                </dd>
+                <dt><span jhiTranslate="openWarehouseManagementApp.outOrder.orderDate">Order Date</span></dt>
+                <dd>
+                    <span>{{outOrder.orderDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="openWarehouseManagementApp.outOrder.deliveryDate">Delivery Date</span></dt>
+                <dd>
+                    <span>{{outOrder.deliveryDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="openWarehouseManagementApp.outOrder.item">Item</span></dt>
+                <dd>
+                    <div *ngIf="outOrder.item">
+                        <a [routerLink]="['/item', outOrder.item?.id, 'view']">{{outOrder.item?.name}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/out-order', outOrder.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

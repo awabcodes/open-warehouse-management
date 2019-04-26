@@ -1,0 +1,55 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="item">
+            <h2><span jhiTranslate="openWarehouseManagementApp.item.detail.title">Item</span> {{item.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="openWarehouseManagementApp.item.name">Name</span></dt>
+                <dd>
+                    <span>{{item.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="openWarehouseManagementApp.item.type">Type</span></dt>
+                <dd>
+                    <span>{{item.type}}</span>
+                </dd>
+                <dt><span jhiTranslate="openWarehouseManagementApp.item.availableQuantity">Available Quantity</span></dt>
+                <dd>
+                    <span>{{item.availableQuantity}}</span>
+                </dd>
+                <dt><span jhiTranslate="openWarehouseManagementApp.item.minimumQuantity">Minimum Quantity</span></dt>
+                <dd>
+                    <span>{{item.minimumQuantity}}</span>
+                </dd>
+                <dt><span jhiTranslate="openWarehouseManagementApp.item.price">Price</span></dt>
+                <dd>
+                    <span>{{item.price}}</span>
+                </dd>
+                <dt><span jhiTranslate="openWarehouseManagementApp.item.specification">Specification</span></dt>
+                <dd>
+                    <span>{{item.specification}}</span>
+                </dd>
+                <dt><span jhiTranslate="openWarehouseManagementApp.item.supplier">Supplier</span></dt>
+                <dd>
+                    <span>{{item.supplier}}</span>
+                </dd>
+                <dt><span jhiTranslate="openWarehouseManagementApp.item.description">Description</span></dt>
+                <dd>
+                    <span>{{item.description}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/item', item.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

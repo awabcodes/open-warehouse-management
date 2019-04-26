@@ -1,0 +1,39 @@
+entity Item {
+    name String required,
+    type String required,
+    availableQuantity Double required,
+    minimumQuantity Double required,
+    price Double required,
+    specification String,
+    supplier String,
+    description String
+}
+
+entity OutOrder {
+    // Item
+    title String required,
+    information String required,
+    orderQuantity Double required,
+    delivered Boolean,
+    orderDate LocalDate,
+    deliveryDate LocalDate
+}
+
+entity InOrder {
+    // Item
+    title String required,
+    information String required,
+    orderQuantity Double required,
+    delivered Boolean,
+    orderDate LocalDate,
+    deliveryDate LocalDate
+}
+
+relationship OneToMany {
+    Item{outOrders(title)} to OutOrder{item(name)}
+    Item{inOrders(title)} to InOrder{item(name)}
+}
+
+filter *
+service * with serviceClass
+paginate * with pagination

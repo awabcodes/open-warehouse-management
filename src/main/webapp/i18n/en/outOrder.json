@@ -1,0 +1,27 @@
+{
+    "openWarehouseManagementApp": {
+        "outOrder": {
+            "home": {
+                "title": "Out Orders",
+                "createLabel": "Create a new Out Order",
+                "createOrEditLabel": "Create or edit a Out Order"
+            },
+            "created": "A new Out Order is created with identifier {{ param }}",
+            "updated": "A Out Order is updated with identifier {{ param }}",
+            "deleted": "A Out Order is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Out Order {{ id }}?"
+            },
+            "detail": {
+                "title": "Out Order"
+            },
+            "title": "Title",
+            "information": "Information",
+            "orderQuantity": "Order Quantity",
+            "delivered": "Delivered",
+            "orderDate": "Order Date",
+            "deliveryDate": "Delivery Date",
+            "item": "Item"
+        }
+    }
+}
