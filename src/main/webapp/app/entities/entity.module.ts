@@ -15,6 +15,14 @@ import { RouterModule } from '@angular/router';
             {
                 path: 'in-order',
                 loadChildren: './in-order/in-order.module#OpenWarehouseManagementInOrderModule'
+            },
+            {
+                path: 'out-order',
+                loadChildren: './out-order/out-order.module#OpenWarehouseManagementOutOrderModule'
+            },
+            {
+                path: 'in-order',
+                loadChildren: './in-order/in-order.module#OpenWarehouseManagementInOrderModule'
             }
             /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
         ])

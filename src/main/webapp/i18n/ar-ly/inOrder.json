@@ -21,6 +21,7 @@
             "delivered": "Delivered",
             "orderDate": "Order Date",
             "deliveryDate": "Delivery Date",
+            "authorized": "Authorized",
             "item": "Item"
         }
     }

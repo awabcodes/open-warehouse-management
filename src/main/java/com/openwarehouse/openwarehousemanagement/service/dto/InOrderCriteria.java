@@ -37,6 +37,8 @@ public class InOrderCriteria implements Serializable {
 
     private LocalDateFilter deliveryDate;
 
+    private BooleanFilter authorized;
+
     private LongFilter itemId;
 
     public LongFilter getId() {
@@ -95,6 +97,14 @@ public class InOrderCriteria implements Serializable {
         this.deliveryDate = deliveryDate;
     }
 
+    public BooleanFilter getAuthorized() {
+        return authorized;
+    }
+
+    public void setAuthorized(BooleanFilter authorized) {
+        this.authorized = authorized;
+    }
+
     public LongFilter getItemId() {
         return itemId;
     }
@@ -121,6 +131,7 @@ public class InOrderCriteria implements Serializable {
             Objects.equals(delivered, that.delivered) &&
             Objects.equals(orderDate, that.orderDate) &&
             Objects.equals(deliveryDate, that.deliveryDate) &&
+            Objects.equals(authorized, that.authorized) &&
             Objects.equals(itemId, that.itemId);
     }
 
@@ -134,6 +145,7 @@ public class InOrderCriteria implements Serializable {
         delivered,
         orderDate,
         deliveryDate,
+        authorized,
         itemId
         );
     }
@@ -148,6 +160,7 @@ public class InOrderCriteria implements Serializable {
                 (delivered != null ? "delivered=" + delivered + ", " : "") +
                 (orderDate != null ? "orderDate=" + orderDate + ", " : "") +
                 (deliveryDate != null ? "deliveryDate=" + deliveryDate + ", " : "") +
+                (authorized != null ? "authorized=" + authorized + ", " : "") +
                 (itemId != null ? "itemId=" + itemId + ", " : "") +
             "}";
     }

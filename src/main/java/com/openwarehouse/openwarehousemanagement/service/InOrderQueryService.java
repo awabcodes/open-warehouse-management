@@ -101,6 +101,9 @@ public class InOrderQueryService extends QueryService<InOrder> {
             if (criteria.getDeliveryDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getDeliveryDate(), InOrder_.deliveryDate));
             }
+            if (criteria.getAuthorized() != null) {
+                specification = specification.and(buildSpecification(criteria.getAuthorized(), InOrder_.authorized));
+            }
             if (criteria.getItemId() != null) {
                 specification = specification.and(buildSpecification(criteria.getItemId(),
                     root -> root.join(InOrder_.item, JoinType.LEFT).get(Item_.id)));

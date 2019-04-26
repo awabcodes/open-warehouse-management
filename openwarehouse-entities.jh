@@ -16,7 +16,8 @@ entity OutOrder {
     orderQuantity Double required,
     delivered Boolean,
     orderDate LocalDate,
-    deliveryDate LocalDate
+    deliveryDate LocalDate,
+    authorized Boolean
 }
 
 entity InOrder {
@@ -26,7 +27,8 @@ entity InOrder {
     orderQuantity Double required,
     delivered Boolean,
     orderDate LocalDate,
-    deliveryDate LocalDate
+    deliveryDate LocalDate,
+    authorized Boolean
 }
 
 relationship OneToMany {

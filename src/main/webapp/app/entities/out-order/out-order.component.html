@@ -21,6 +21,7 @@
             <th jhiSortBy="delivered"><span jhiTranslate="openWarehouseManagementApp.outOrder.delivered">Delivered</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="orderDate"><span jhiTranslate="openWarehouseManagementApp.outOrder.orderDate">Order Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="deliveryDate"><span jhiTranslate="openWarehouseManagementApp.outOrder.deliveryDate">Delivery Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="authorized"><span jhiTranslate="openWarehouseManagementApp.outOrder.authorized">Authorized</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="item.name"><span jhiTranslate="openWarehouseManagementApp.outOrder.item">Item</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
@@ -34,6 +35,7 @@
                 <td>{{outOrder.delivered}}</td>
                 <td>{{outOrder.orderDate | date:'mediumDate'}}</td>
                 <td>{{outOrder.deliveryDate | date:'mediumDate'}}</td>
+                <td>{{outOrder.authorized}}</td>
                 <td>
                     <div *ngIf="outOrder.item">
                         <a [routerLink]="['../item', outOrder.item?.id, 'view' ]" >{{outOrder.item?.name}}</a>

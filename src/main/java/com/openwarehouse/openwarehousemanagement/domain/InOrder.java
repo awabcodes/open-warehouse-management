@@ -47,6 +47,9 @@ public class InOrder implements Serializable {
     @Column(name = "delivery_date")
     private LocalDate deliveryDate;
 
+    @Column(name = "authorized")
+    private Boolean authorized;
+
     @ManyToOne
     @JsonIgnoreProperties("inOrders")
     private Item item;
@@ -138,6 +141,19 @@ public class InOrder implements Serializable {
         this.deliveryDate = deliveryDate;
     }
 
+    public Boolean isAuthorized() {
+        return authorized;
+    }
+
+    public InOrder authorized(Boolean authorized) {
+        this.authorized = authorized;
+        return this;
+    }
+
+    public void setAuthorized(Boolean authorized) {
+        this.authorized = authorized;
+    }
+
     public Item getItem() {
         return item;
     }
@@ -182,6 +198,7 @@ public class InOrder implements Serializable {
             ", delivered='" + isDelivered() + "'" +
             ", orderDate='" + getOrderDate() + "'" +
             ", deliveryDate='" + getDeliveryDate() + "'" +
+            ", authorized='" + isAuthorized() + "'" +
             "}";
     }
 }

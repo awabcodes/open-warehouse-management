@@ -71,6 +71,11 @@
                         </span>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="openWarehouseManagementApp.inOrder.authorized" for="field_authorized">Authorized</label>
+                    <input type="checkbox" class="form-control" name="authorized" id="field_authorized"
+                        [(ngModel)]="inOrder.authorized" />
+                </div>
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="openWarehouseManagementApp.inOrder.item" for="field_item">Item</label>

@@ -25,7 +25,7 @@ describe('Service Tests', () => {
             httpMock = injector.get(HttpTestingController);
             currentDate = moment();
 
-            elemDefault = new OutOrder(0, 'AAAAAAA', 'AAAAAAA', 0, false, currentDate, currentDate);
+            elemDefault = new OutOrder(0, 'AAAAAAA', 'AAAAAAA', 0, false, currentDate, currentDate, false);
         });
 
         describe('Service methods', async () => {
@@ -78,7 +78,8 @@ describe('Service Tests', () => {
                         orderQuantity: 1,
                         delivered: true,
                         orderDate: currentDate.format(DATE_FORMAT),
-                        deliveryDate: currentDate.format(DATE_FORMAT)
+                        deliveryDate: currentDate.format(DATE_FORMAT),
+                        authorized: true
                     },
                     elemDefault
                 );
@@ -106,7 +107,8 @@ describe('Service Tests', () => {
                         orderQuantity: 1,
                         delivered: true,
                         orderDate: currentDate.format(DATE_FORMAT),
-                        deliveryDate: currentDate.format(DATE_FORMAT)
+                        deliveryDate: currentDate.format(DATE_FORMAT),
+                        authorized: true
                     },
                     elemDefault
                 );

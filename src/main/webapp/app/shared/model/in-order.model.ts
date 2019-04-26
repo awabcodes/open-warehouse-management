@@ -9,6 +9,7 @@ export interface IInOrder {
     delivered?: boolean;
     orderDate?: Moment;
     deliveryDate?: Moment;
+    authorized?: boolean;
     item?: IItem;
 }
 
@@ -21,8 +22,10 @@ export class InOrder implements IInOrder {
         public delivered?: boolean,
         public orderDate?: Moment,
         public deliveryDate?: Moment,
+        public authorized?: boolean,
         public item?: IItem
     ) {
         this.delivered = this.delivered || false;
+        this.authorized = this.authorized || false;
     }
 }

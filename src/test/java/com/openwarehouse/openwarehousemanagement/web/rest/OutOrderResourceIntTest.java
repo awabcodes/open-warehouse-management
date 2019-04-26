@@ -64,6 +64,9 @@ public class OutOrderResourceIntTest {
     private static final LocalDate DEFAULT_DELIVERY_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DELIVERY_DATE = LocalDate.now(ZoneId.systemDefault());
 
+    private static final Boolean DEFAULT_AUTHORIZED = false;
+    private static final Boolean UPDATED_AUTHORIZED = true;
+
     @Autowired
     private OutOrderRepository outOrderRepository;
 
@@ -117,7 +120,8 @@ public class OutOrderResourceIntTest {
             .orderQuantity(DEFAULT_ORDER_QUANTITY)
             .delivered(DEFAULT_DELIVERED)
             .orderDate(DEFAULT_ORDER_DATE)
-            .deliveryDate(DEFAULT_DELIVERY_DATE);
+            .deliveryDate(DEFAULT_DELIVERY_DATE)
+            .authorized(DEFAULT_AUTHORIZED);
         return outOrder;
     }
 
@@ -147,6 +151,7 @@ public class OutOrderResourceIntTest {
         assertThat(testOutOrder.isDelivered()).isEqualTo(DEFAULT_DELIVERED);
         assertThat(testOutOrder.getOrderDate()).isEqualTo(DEFAULT_ORDER_DATE);
         assertThat(testOutOrder.getDeliveryDate()).isEqualTo(DEFAULT_DELIVERY_DATE);
+        assertThat(testOutOrder.isAuthorized()).isEqualTo(DEFAULT_AUTHORIZED);
     }
 
     @Test
@@ -238,7 +243,8 @@ public class OutOrderResourceIntTest {
             .andExpect(jsonPath("$.[*].orderQuantity").value(hasItem(DEFAULT_ORDER_QUANTITY.doubleValue())))
             .andExpect(jsonPath("$.[*].delivered").value(hasItem(DEFAULT_DELIVERED.booleanValue())))
             .andExpect(jsonPath("$.[*].orderDate").value(hasItem(DEFAULT_ORDER_DATE.toString())))
-            .andExpect(jsonPath("$.[*].deliveryDate").value(hasItem(DEFAULT_DELIVERY_DATE.toString())));
+            .andExpect(jsonPath("$.[*].deliveryDate").value(hasItem(DEFAULT_DELIVERY_DATE.toString())))
+            .andExpect(jsonPath("$.[*].authorized").value(hasItem(DEFAULT_AUTHORIZED.booleanValue())));
     }
     
     @Test
@@ -257,7 +263,8 @@ public class OutOrderResourceIntTest {
             .andExpect(jsonPath("$.orderQuantity").value(DEFAULT_ORDER_QUANTITY.doubleValue()))
             .andExpect(jsonPath("$.delivered").value(DEFAULT_DELIVERED.booleanValue()))
             .andExpect(jsonPath("$.orderDate").value(DEFAULT_ORDER_DATE.toString()))
-            .andExpect(jsonPath("$.deliveryDate").value(DEFAULT_DELIVERY_DATE.toString()));
+            .andExpect(jsonPath("$.deliveryDate").value(DEFAULT_DELIVERY_DATE.toString()))
+            .andExpect(jsonPath("$.authorized").value(DEFAULT_AUTHORIZED.booleanValue()));
     }
 
     @Test
@@ -550,6 +557,45 @@ public class OutOrderResourceIntTest {
 
     @Test
     @Transactional
+    public void getAllOutOrdersByAuthorizedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        outOrderRepository.saveAndFlush(outOrder);
+
+        // Get all the outOrderList where authorized equals to DEFAULT_AUTHORIZED
+        defaultOutOrderShouldBeFound("authorized.equals=" + DEFAULT_AUTHORIZED);
+
+        // Get all the outOrderList where authorized equals to UPDATED_AUTHORIZED
+        defaultOutOrderShouldNotBeFound("authorized.equals=" + UPDATED_AUTHORIZED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOutOrdersByAuthorizedIsInShouldWork() throws Exception {
+        // Initialize the database
+        outOrderRepository.saveAndFlush(outOrder);
+
+        // Get all the outOrderList where authorized in DEFAULT_AUTHORIZED or UPDATED_AUTHORIZED
+        defaultOutOrderShouldBeFound("authorized.in=" + DEFAULT_AUTHORIZED + "," + UPDATED_AUTHORIZED);
+
+        // Get all the outOrderList where authorized equals to UPDATED_AUTHORIZED
+        defaultOutOrderShouldNotBeFound("authorized.in=" + UPDATED_AUTHORIZED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllOutOrdersByAuthorizedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        outOrderRepository.saveAndFlush(outOrder);
+
+        // Get all the outOrderList where authorized is not null
+        defaultOutOrderShouldBeFound("authorized.specified=true");
+
+        // Get all the outOrderList where authorized is null
+        defaultOutOrderShouldNotBeFound("authorized.specified=false");
+    }
+
+    @Test
+    @Transactional
     public void getAllOutOrdersByItemIsEqualToSomething() throws Exception {
         // Initialize the database
         Item item = ItemResourceIntTest.createEntity(em);
@@ -579,7 +625,8 @@ public class OutOrderResourceIntTest {
             .andExpect(jsonPath("$.[*].orderQuantity").value(hasItem(DEFAULT_ORDER_QUANTITY.doubleValue())))
             .andExpect(jsonPath("$.[*].delivered").value(hasItem(DEFAULT_DELIVERED.booleanValue())))
             .andExpect(jsonPath("$.[*].orderDate").value(hasItem(DEFAULT_ORDER_DATE.toString())))
-            .andExpect(jsonPath("$.[*].deliveryDate").value(hasItem(DEFAULT_DELIVERY_DATE.toString())));
+            .andExpect(jsonPath("$.[*].deliveryDate").value(hasItem(DEFAULT_DELIVERY_DATE.toString())))
+            .andExpect(jsonPath("$.[*].authorized").value(hasItem(DEFAULT_AUTHORIZED.booleanValue())));
 
         // Check, that the count call also returns 1
         restOutOrderMockMvc.perform(get("/api/out-orders/count?sort=id,desc&" + filter))
@@ -632,7 +679,8 @@ public class OutOrderResourceIntTest {
             .orderQuantity(UPDATED_ORDER_QUANTITY)
             .delivered(UPDATED_DELIVERED)
             .orderDate(UPDATED_ORDER_DATE)
-            .deliveryDate(UPDATED_DELIVERY_DATE);
+            .deliveryDate(UPDATED_DELIVERY_DATE)
+            .authorized(UPDATED_AUTHORIZED);
 
         restOutOrderMockMvc.perform(put("/api/out-orders")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -649,6 +697,7 @@ public class OutOrderResourceIntTest {
         assertThat(testOutOrder.isDelivered()).isEqualTo(UPDATED_DELIVERED);
         assertThat(testOutOrder.getOrderDate()).isEqualTo(UPDATED_ORDER_DATE);
         assertThat(testOutOrder.getDeliveryDate()).isEqualTo(UPDATED_DELIVERY_DATE);
+        assertThat(testOutOrder.isAuthorized()).isEqualTo(UPDATED_AUTHORIZED);
     }
 
     @Test

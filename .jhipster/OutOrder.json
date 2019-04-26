@@ -33,6 +33,10 @@
         {
             "fieldName": "deliveryDate",
             "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "authorized",
+            "fieldType": "Boolean"
         }
     ],
     "relationships": [

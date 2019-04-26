@@ -64,6 +64,9 @@ public class InOrderResourceIntTest {
     private static final LocalDate DEFAULT_DELIVERY_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DELIVERY_DATE = LocalDate.now(ZoneId.systemDefault());
 
+    private static final Boolean DEFAULT_AUTHORIZED = false;
+    private static final Boolean UPDATED_AUTHORIZED = true;
+
     @Autowired
     private InOrderRepository inOrderRepository;
 
@@ -117,7 +120,8 @@ public class InOrderResourceIntTest {
             .orderQuantity(DEFAULT_ORDER_QUANTITY)
             .delivered(DEFAULT_DELIVERED)
             .orderDate(DEFAULT_ORDER_DATE)
-            .deliveryDate(DEFAULT_DELIVERY_DATE);
+            .deliveryDate(DEFAULT_DELIVERY_DATE)
+            .authorized(DEFAULT_AUTHORIZED);
         return inOrder;
     }
 
@@ -147,6 +151,7 @@ public class InOrderResourceIntTest {
         assertThat(testInOrder.isDelivered()).isEqualTo(DEFAULT_DELIVERED);
         assertThat(testInOrder.getOrderDate()).isEqualTo(DEFAULT_ORDER_DATE);
         assertThat(testInOrder.getDeliveryDate()).isEqualTo(DEFAULT_DELIVERY_DATE);
+        assertThat(testInOrder.isAuthorized()).isEqualTo(DEFAULT_AUTHORIZED);
     }
 
     @Test
@@ -238,7 +243,8 @@ public class InOrderResourceIntTest {
             .andExpect(jsonPath("$.[*].orderQuantity").value(hasItem(DEFAULT_ORDER_QUANTITY.doubleValue())))
             .andExpect(jsonPath("$.[*].delivered").value(hasItem(DEFAULT_DELIVERED.booleanValue())))
             .andExpect(jsonPath("$.[*].orderDate").value(hasItem(DEFAULT_ORDER_DATE.toString())))
-            .andExpect(jsonPath("$.[*].deliveryDate").value(hasItem(DEFAULT_DELIVERY_DATE.toString())));
+            .andExpect(jsonPath("$.[*].deliveryDate").value(hasItem(DEFAULT_DELIVERY_DATE.toString())))
+            .andExpect(jsonPath("$.[*].authorized").value(hasItem(DEFAULT_AUTHORIZED.booleanValue())));
     }
     
     @Test
@@ -257,7 +263,8 @@ public class InOrderResourceIntTest {
             .andExpect(jsonPath("$.orderQuantity").value(DEFAULT_ORDER_QUANTITY.doubleValue()))
             .andExpect(jsonPath("$.delivered").value(DEFAULT_DELIVERED.booleanValue()))
             .andExpect(jsonPath("$.orderDate").value(DEFAULT_ORDER_DATE.toString()))
-            .andExpect(jsonPath("$.deliveryDate").value(DEFAULT_DELIVERY_DATE.toString()));
+            .andExpect(jsonPath("$.deliveryDate").value(DEFAULT_DELIVERY_DATE.toString()))
+            .andExpect(jsonPath("$.authorized").value(DEFAULT_AUTHORIZED.booleanValue()));
     }
 
     @Test
@@ -550,6 +557,45 @@ public class InOrderResourceIntTest {
 
     @Test
     @Transactional
+    public void getAllInOrdersByAuthorizedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        inOrderRepository.saveAndFlush(inOrder);
+
+        // Get all the inOrderList where authorized equals to DEFAULT_AUTHORIZED
+        defaultInOrderShouldBeFound("authorized.equals=" + DEFAULT_AUTHORIZED);
+
+        // Get all the inOrderList where authorized equals to UPDATED_AUTHORIZED
+        defaultInOrderShouldNotBeFound("authorized.equals=" + UPDATED_AUTHORIZED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllInOrdersByAuthorizedIsInShouldWork() throws Exception {
+        // Initialize the database
+        inOrderRepository.saveAndFlush(inOrder);
+
+        // Get all the inOrderList where authorized in DEFAULT_AUTHORIZED or UPDATED_AUTHORIZED
+        defaultInOrderShouldBeFound("authorized.in=" + DEFAULT_AUTHORIZED + "," + UPDATED_AUTHORIZED);
+
+        // Get all the inOrderList where authorized equals to UPDATED_AUTHORIZED
+        defaultInOrderShouldNotBeFound("authorized.in=" + UPDATED_AUTHORIZED);
+    }
+
+    @Test
+    @Transactional
+    public void getAllInOrdersByAuthorizedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        inOrderRepository.saveAndFlush(inOrder);
+
+        // Get all the inOrderList where authorized is not null
+        defaultInOrderShouldBeFound("authorized.specified=true");
+
+        // Get all the inOrderList where authorized is null
+        defaultInOrderShouldNotBeFound("authorized.specified=false");
+    }
+
+    @Test
+    @Transactional
     public void getAllInOrdersByItemIsEqualToSomething() throws Exception {
         // Initialize the database
         Item item = ItemResourceIntTest.createEntity(em);
@@ -579,7 +625,8 @@ public class InOrderResourceIntTest {
             .andExpect(jsonPath("$.[*].orderQuantity").value(hasItem(DEFAULT_ORDER_QUANTITY.doubleValue())))
             .andExpect(jsonPath("$.[*].delivered").value(hasItem(DEFAULT_DELIVERED.booleanValue())))
             .andExpect(jsonPath("$.[*].orderDate").value(hasItem(DEFAULT_ORDER_DATE.toString())))
-            .andExpect(jsonPath("$.[*].deliveryDate").value(hasItem(DEFAULT_DELIVERY_DATE.toString())));
+            .andExpect(jsonPath("$.[*].deliveryDate").value(hasItem(DEFAULT_DELIVERY_DATE.toString())))
+            .andExpect(jsonPath("$.[*].authorized").value(hasItem(DEFAULT_AUTHORIZED.booleanValue())));
 
         // Check, that the count call also returns 1
         restInOrderMockMvc.perform(get("/api/in-orders/count?sort=id,desc&" + filter))
@@ -632,7 +679,8 @@ public class InOrderResourceIntTest {
             .orderQuantity(UPDATED_ORDER_QUANTITY)
             .delivered(UPDATED_DELIVERED)
             .orderDate(UPDATED_ORDER_DATE)
-            .deliveryDate(UPDATED_DELIVERY_DATE);
+            .deliveryDate(UPDATED_DELIVERY_DATE)
+            .authorized(UPDATED_AUTHORIZED);
 
         restInOrderMockMvc.perform(put("/api/in-orders")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -649,6 +697,7 @@ public class InOrderResourceIntTest {
         assertThat(testInOrder.isDelivered()).isEqualTo(UPDATED_DELIVERED);
         assertThat(testInOrder.getOrderDate()).isEqualTo(UPDATED_ORDER_DATE);
         assertThat(testInOrder.getDeliveryDate()).isEqualTo(UPDATED_DELIVERY_DATE);
+        assertThat(testInOrder.isAuthorized()).isEqualTo(UPDATED_AUTHORIZED);
     }
 
     @Test

@@ -101,6 +101,9 @@ public class OutOrderQueryService extends QueryService<OutOrder> {
             if (criteria.getDeliveryDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getDeliveryDate(), OutOrder_.deliveryDate));
             }
+            if (criteria.getAuthorized() != null) {
+                specification = specification.and(buildSpecification(criteria.getAuthorized(), OutOrder_.authorized));
+            }
             if (criteria.getItemId() != null) {
                 specification = specification.and(buildSpecification(criteria.getItemId(),
                     root -> root.join(OutOrder_.item, JoinType.LEFT).get(Item_.id)));
