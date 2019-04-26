@@ -1,6 +1,6 @@
 {
     "global": {
-        "title": "OpenWarehouseManagement",
+        "title": "ادارة المخزن",
         "browsehappy": "أنت تستخدم متصفح <strong>قديم</strong> . من فضلك <a href=\"http://browsehappy.com/?locale=en\">قم بتحديث متصفحك</a> لتحسين تجربتك.",
         "menu": {
             "home": "الصفحة الرئيسية",
@@ -134,5 +134,5 @@
         "idexists": "{{ entityName }} جديد لا يمكن أن يكون له معرف بالفعل",
         "idnull": "Invalid ID"
     },
-    "footer": "هنا يضع الفووتر"
+    "footer": "ادارة المخزن"
 }
