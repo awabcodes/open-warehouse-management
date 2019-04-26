@@ -37,7 +37,7 @@ export const outOrderRoute: Routes = [
             pagingParams: JhiResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER', 'ROLE_MANAGER', 'ROLE_AUTHORIZER'],
             defaultSort: 'id,asc',
             pageTitle: 'openWarehouseManagementApp.outOrder.home.title'
         },
@@ -50,7 +50,7 @@ export const outOrderRoute: Routes = [
             outOrder: OutOrderResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER', 'ROLE_MANAGER', 'ROLE_AUTHORIZER'],
             pageTitle: 'openWarehouseManagementApp.outOrder.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -62,7 +62,7 @@ export const outOrderRoute: Routes = [
             outOrder: OutOrderResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER', 'ROLE_MANAGER', 'ROLE_AUTHORIZER'],
             pageTitle: 'openWarehouseManagementApp.outOrder.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -74,7 +74,7 @@ export const outOrderRoute: Routes = [
             outOrder: OutOrderResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER', 'ROLE_MANAGER', 'ROLE_AUTHORIZER'],
             pageTitle: 'openWarehouseManagementApp.outOrder.home.title'
         },
         canActivate: [UserRouteAccessService]
@@ -89,7 +89,7 @@ export const outOrderPopupRoute: Routes = [
             outOrder: OutOrderResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER', 'ROLE_MANAGER', 'ROLE_AUTHORIZER'],
             pageTitle: 'openWarehouseManagementApp.outOrder.home.title'
         },
         canActivate: [UserRouteAccessService],
