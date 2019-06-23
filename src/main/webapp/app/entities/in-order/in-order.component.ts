@@ -91,6 +91,26 @@ export class InOrderComponent implements OnInit, OnDestroy {
         this.loadAll();
     }
 
+    auhorize(id: number) {
+        this.inOrderService.authorize(id).subscribe(
+            (res: any) => {
+                this.onSuccess();
+                this.loadAll();
+            },
+            (err: any) => this.onError(err)
+        );
+    }
+
+    deliver(id: number) {
+        this.inOrderService.deliver(id).subscribe(
+            (res: any) => {
+                this.onSuccess();
+                this.loadAll();
+            },
+            (err: any) => this.onError(err)
+        );
+    }
+
     ngOnInit() {
         this.loadAll();
         this.accountService.identity().then(account => {
@@ -123,6 +143,10 @@ export class InOrderComponent implements OnInit, OnDestroy {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
         this.inOrders = data;
+    }
+
+    protected onSuccess() {
+        this.jhiAlertService.success('Success', null, null);
     }
 
     protected onError(errorMessage: string) {

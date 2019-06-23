@@ -49,6 +49,14 @@ export class InOrderService {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
+    authorize(id: number): Observable<HttpResponse<any>> {
+        return this.http.post<any>(`${this.resourceUrl + '-authorize'}/${id}`, { observe: 'response' });
+    }
+
+    deliver(id: number): Observable<HttpResponse<any>> {
+        return this.http.post<any>(`${this.resourceUrl + '-deliver'}/${id}`, { observe: 'response' });
+    }
+
     protected convertDateFromClient(inOrder: IInOrder): IInOrder {
         const copy: IInOrder = Object.assign({}, inOrder, {
             orderDate: inOrder.orderDate != null && inOrder.orderDate.isValid() ? inOrder.orderDate.format(DATE_FORMAT) : null,

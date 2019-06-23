@@ -32,10 +32,20 @@
                 <td>{{inOrder.title}}</td>
                 <td>{{inOrder.information}}</td>
                 <td>{{inOrder.orderQuantity}}</td>
-                <td>{{inOrder.delivered}}</td>
+                <td *ngIf="inOrder.delivered">
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delivered">Delivered</span>
+                </td>
+                <td *ngIf="!inOrder.delivered">
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.notdelivered">Not Delivered</span>
+                </td>
                 <td>{{inOrder.orderDate | date:'mediumDate'}}</td>
                 <td>{{inOrder.deliveryDate | date:'mediumDate'}}</td>
-                <td>{{inOrder.authorized}}</td>
+                <td *ngIf="inOrder.authorized">
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.authorized">Authorized</span>
+                </td>
+                <td *ngIf="!inOrder.authorized">
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.unauthorized">Unauthorized</span>
+                </td>
                 <td>
                     <div *ngIf="inOrder.item">
                         <a [routerLink]="['../item', inOrder.item?.id, 'view' ]" >{{inOrder.item?.name}}</a>
@@ -43,6 +53,37 @@
                 </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
+                        <div *ngIf="!inOrder.delivered">
+                            <div *ngIf="inOrder.authorized">
+                                <button type="button"
+                                        class="btn btn-danger btn-sm"
+                                        (click)="auhorize(inOrder.id)"
+                                        *jhiHasAnyAuthority="'ROLE_AUTHORIZER'">
+                                    <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                    <span class="d-none d-md-inline" jhiTranslate="entity.action.unauthorize">Unauthorize</span>
+                                </button>
+                            </div>
+                            <div *ngIf="!inOrder.authorized">
+                                <button type="button"
+                                        class="btn btn-success btn-sm"
+                                        (click)="auhorize(inOrder.id)"
+                                        *jhiHasAnyAuthority="'ROLE_AUTHORIZER'">
+                                    <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                    <span class="d-none d-md-inline" jhiTranslate="entity.action.authorize">Authorize</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div *ngIf="inOrder.authorized">
+                            <div *ngIf="!inOrder.delivered">
+                                <button type="button"
+                                        class="btn btn-success btn-sm"
+                                        (click)="deliver(inOrder.id)"
+                                        *jhiHasAnyAuthority="'ROLE_MANAGER'">
+                                    <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                    <span class="d-none d-md-inline" jhiTranslate="entity.action.deliver">Deliver</span>
+                                </button>
+                            </div>
+                        </div>
                         <button type="submit"
                                 [routerLink]="['/in-order', inOrder.id, 'view' ]"
                                 class="btn btn-info btn-sm">
@@ -50,12 +91,14 @@
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                         </button>
                         <button type="submit"
+                                *jhiHasAnyAuthority="'ROLE_MANAGER'"
                                 [routerLink]="['/in-order', inOrder.id, 'edit']"
                                 class="btn btn-primary btn-sm">
                             <fa-icon [icon]="'pencil-alt'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
+                                *jhiHasAnyAuthority="'ROLE_ADMIN'"
                                 [routerLink]="['/', 'in-order', { outlets: { popup: inOrder.id + '/delete'} }]"
                                 replaceUrl="true"
                                 queryParamsHandling="merge"
