@@ -13,11 +13,12 @@ import {
     itemRoute,
     itemPopupRoute
 } from './';
+import { QRCodeModule } from 'angularx-qrcode';
 
 const ENTITY_STATES = [...itemRoute, ...itemPopupRoute];
 
 @NgModule({
-    imports: [OpenWarehouseManagementSharedModule, RouterModule.forChild(ENTITY_STATES)],
+    imports: [OpenWarehouseManagementSharedModule, QRCodeModule, RouterModule.forChild(ENTITY_STATES)],
     declarations: [ItemComponent, ItemDetailComponent, ItemUpdateComponent, ItemDeleteDialogComponent, ItemDeletePopupComponent],
     entryComponents: [ItemComponent, ItemUpdateComponent, ItemDeleteDialogComponent, ItemDeletePopupComponent],
     providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],

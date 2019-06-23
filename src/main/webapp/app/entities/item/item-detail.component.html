@@ -5,6 +5,10 @@
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
+                <dt><span>QR CODE</span></dt>
+                <dd>
+                    <qrcode [qrdata]="item.id" [size]="256" [level]="'M'"></qrcode>
+                </dd>
                 <dt><span jhiTranslate="openWarehouseManagementApp.item.name">Name</span></dt>
                 <dd>
                     <span>{{item.name}}</span>
