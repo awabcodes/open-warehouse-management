@@ -1,6 +1,7 @@
 package com.openwarehouse.openwarehousemanagement.service;
 
 import com.openwarehouse.openwarehousemanagement.domain.InOrder;
+import com.openwarehouse.openwarehousemanagement.domain.Item;
 import com.openwarehouse.openwarehousemanagement.repository.InOrderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 /**
@@ -23,8 +25,11 @@ public class InOrderService {
 
     private final InOrderRepository inOrderRepository;
 
-    public InOrderService(InOrderRepository inOrderRepository) {
+    private final ItemService itemService;
+
+    public InOrderService(InOrderRepository inOrderRepository, ItemService itemService) {
         this.inOrderRepository = inOrderRepository;
+        this.itemService = itemService;
     }
 
     /**
@@ -35,7 +40,33 @@ public class InOrderService {
      */
     public InOrder save(InOrder inOrder) {
         log.debug("Request to save InOrder : {}", inOrder);
+        inOrder.setAuthorized(false);
+        inOrder.setDelivered(false);
+        inOrder.setOrderDate(LocalDate.now());
         return inOrderRepository.save(inOrder);
+    }
+
+    public InOrder authorize(Long id) {
+        log.debug("Request to authorize InOrder : {}", id);
+        InOrder inOrder = findOne(id).get();
+        inOrder.setAuthorized(!inOrder.isAuthorized());
+        return inOrderRepository.save(inOrder);
+    }
+
+    public InOrder deliver(Long id) {
+        log.debug("Request to deliver InOrder : {}", id);
+        InOrder inOrder = findOne(id).get();
+        Item item = itemService.findOne(inOrder.getItem().getId()).get();
+        
+        double leftQuantity = item.getAvailableQuantity() + inOrder.getOrderQuantity();
+        if (inOrder.isAuthorized()) {
+            item.setAvailableQuantity(leftQuantity);
+            inOrder.setDelivered(true);
+            inOrder.setDeliveryDate(LocalDate.now());
+            return inOrderRepository.save(inOrder);
+        } else {
+            return null;
+        }
     }
 
     /**
